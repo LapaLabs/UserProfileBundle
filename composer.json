@@ -1,0 +1,19 @@
+{
+    "name": "lapalabs/user-profile-bundle",
+    "description": "Provides user profile management for Symfony",
+    "keywords": ["lapalabs", "user", "profile", "bundle"],
+    "homepage": "https://github.com/LapaLabs/UserProfileBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LapaLabs",
+            "email": "mail@brainforce.kiev.ua"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {"LapaLabs\\UserProfileBundle\\": ""}
+    }
+}
