@@ -3,6 +3,7 @@
 namespace LapaLabs\UserProfileBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class AbstractAbstractProfile
@@ -119,9 +120,21 @@ abstract class AbstractProfile
      */
     protected $updatedAt;
 
+    /**
+     * @var UserInterface
+     *
+     * @ORM\OneToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
+     */
+    protected $user;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->getFullName();
     }
 
     /**
@@ -132,6 +145,22 @@ abstract class AbstractProfile
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getFullName()
+    {
+        $fullName = [];
+        if ($this->surname) {
+            $fullName[] = $this->surname;
+        }
+        if ($this->name) {
+            $fullName[] = $this->name;
+        }
+        if ($this->patronymic) {
+            $fullName[] = $this->patronymic;
+        }
+
+        return implode(' ', $fullName);
     }
 
     /**
@@ -446,5 +475,24 @@ abstract class AbstractProfile
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @param UserInterface $user
+     * @return AbstractProfile
+     */
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return UserInterface
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
