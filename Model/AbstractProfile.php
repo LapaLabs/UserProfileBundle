@@ -20,6 +20,9 @@ abstract class AbstractProfile
      */
     const FEMALE = false;
 
+    /**
+     * @inherit
+     */
     protected $id;
 
     /**
@@ -109,7 +112,7 @@ abstract class AbstractProfile
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
@@ -146,7 +149,26 @@ abstract class AbstractProfile
     {
         return $this->id;
     }
+    
+    /**
+     * @var string $name
+     * @var string $patronymic
+     * @var string $surname
+     * 
+     * @return AbstractProfile
+     */
+    public function setFullName($name, $patronymic = '', $surname = '')
+    {
+        $this->name = $name;
+        $this->patronymic = $patronymic;
+        $this->surname = $surname;
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getFullName()
     {
         $fullName = [];
@@ -462,7 +484,7 @@ abstract class AbstractProfile
      * @param \DateTime $updatedAt
      * @return AbstractProfile
      */
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt = null)
     {
         $this->updatedAt = $updatedAt;
 
@@ -481,7 +503,7 @@ abstract class AbstractProfile
      * @param UserInterface $user
      * @return AbstractProfile
      */
-    public function setUser(UserInterface $user)
+    public function setUser(UserInterface $user = null)
     {
         $this->user = $user;
 
