@@ -1,0 +1,6 @@
+user:
+    profile:
+        gender:
+            male: Мужской
+            female: Женский
+            undefined: < не указан >

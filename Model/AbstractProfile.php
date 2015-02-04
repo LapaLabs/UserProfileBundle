@@ -6,22 +6,22 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class AbstractAbstractProfile
+ * Class AbstractProfile
  */
 abstract class AbstractProfile
 {
     /**
-     * The male sex value
+     * The male gender value
      */
-    const MALE = true;
+    const GENDER_MALE = 'male';
 
     /**
-     * The female sex value
+     * The female gender value
      */
-    const FEMALE = false;
+    const GENDER_FEMALE = 'female';
 
     /**
-     * @inherit
+     * @var int
      */
     protected $id;
 
@@ -30,28 +30,28 @@ abstract class AbstractProfile
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $surname;
+    protected $surname = '';
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $patronymic;
+    protected $patronymic = '';
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $sex;
+    protected $gender;
 
     /**
      * @var \DateTime
@@ -65,74 +65,66 @@ abstract class AbstractProfile
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $phone;
+    protected $phone = '';
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $skype;
+    protected $skype = '';
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $website;
+    protected $website = '';
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $country;
+    protected $country = '';
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $district;
+    protected $district = '';
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $city;
+    protected $city = '';
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    protected $address;
+    protected $address = '';
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="text")
      */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $updatedAt;
+    protected $biography = '';
 
     /**
      * @var UserInterface
      *
-     * @ORM\OneToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface")
+     * @ORM\OneToOne(targetEntity="Symfony\Component\Security\Core\User\UserInterface", inversedBy="profile")
      */
     protected $user;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
     }
 
     public function __toString()
@@ -255,26 +247,63 @@ abstract class AbstractProfile
     }
 
     /**
-     * Set sex
+     * Set gender
      *
-     * @param boolean $sex
+     * @param string $gender
      * @return AbstractProfile
      */
-    public function setSex($sex)
+    public function setGender($gender)
     {
-        $this->sex = $sex;
+        if (! in_array($gender, [null, self::GENDER_MALE, self::GENDER_FEMALE])) {
+            throw new \InvalidArgumentException("Invalid gender value");
+        }
+        $this->gender = $gender;
 
         return $this;
     }
 
     /**
-     * Get sex
+     * Get gender
      *
-     * @return boolean
+     * @return string
      */
-    public function getSex()
+    public function getGender()
     {
-        return $this->sex;
+        return $this->gender;
+    }
+
+    /**
+     * Get gender name
+     *
+     * @return string
+     */
+    public function getGenderName()
+    {
+        return $this->getGenderNameFor($this->gender);
+    }
+
+    /**
+     * Get gender name
+     *
+     * @param string $gender
+     * @return string
+     */
+    public static function getGenderNameFor($gender)
+    {
+        switch ($gender) {
+            case self::GENDER_MALE:
+                $name = 'user.profile.gender.male';
+                break;
+
+            case self::GENDER_FEMALE:
+                $name = 'user.profile.gender.female';
+                break;
+
+            default:
+                $name = 'user.profile.gender.undefined';
+        }
+
+        return $name;
     }
 
     /**
@@ -462,41 +491,23 @@ abstract class AbstractProfile
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param string $biography
+     *
      * @return AbstractProfile
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setBiography($biography)
     {
-        $this->createdAt = $createdAt;
+        $this->biography = $biography;
 
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
-    public function getCreatedAt()
+    public function getBiography()
     {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     * @return AbstractProfile
-     */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
+        return $this->biography;
     }
 
     /**
