@@ -4,3 +4,17 @@ user:
             male: Male
             female: Female
             undefined: < undefined >
+        field:
+            surname: Surname
+            name: Name
+            patronymic: Patronymic
+            gender: Gender
+            birth_date: Birth date
+            phone: Phone
+            skype: Skype
+            website: Website
+            country: Country
+            district: District
+            city: City
+            address: Address
+            biography: Biography

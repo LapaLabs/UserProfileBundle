@@ -4,3 +4,17 @@ user:
             male: Мужской
             female: Женский
             undefined: < не указан >
+        field:
+            surname: Фамилия
+            name: Имя
+            patronymic: Отчество
+            gender: Пол
+            birth_date: Дата рождения
+            phone: Телефон
+            skype: Скайп
+            website: Веб-сайт
+            country: Страна
+            district: Район
+            city: Город
+            address: Адрес
+            biography: Биография
