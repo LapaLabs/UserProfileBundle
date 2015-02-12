@@ -330,6 +330,21 @@ abstract class AbstractProfile
     }
 
     /**
+     * @return \DateInterval
+     */
+    public function getYearsOld()
+    {
+        $diff = null;
+
+        if ($this->birthDate instanceof \DateTime) {
+            $now = new \DateTime();
+            $diff = $now->diff($this->birthDate);
+        }
+
+        return $diff;
+    }
+
+    /**
      * Set phone
      *
      * @param string $phone
