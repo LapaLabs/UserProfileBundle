@@ -123,10 +123,17 @@ abstract class AbstractProfile
      */
     protected $user;
 
-    public function __construct()
+    /**
+     * @param UserInterface $user
+     */
+    public function __construct(UserInterface $user)
     {
+        $this->user = $user;
     }
 
+    /**
+     * @return string The user full name
+     */
     public function __toString()
     {
         return $this->getFullName();
