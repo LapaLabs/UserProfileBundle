@@ -71,10 +71,10 @@ doctrine:
 * Meaning that you already have your `User` entity. Create it if not.
 You can easy use amazing [FOSUserBundle](https://github.com/FriendsOfSymfony/FOSUserBundle) for it.
 
-## Create relation with User
+## Create relation between User and Profile
 
 The `LapaLabs\UserProfileBundle\Model\AbstractProfile` has bidirectional relation
-with `profile` property of your `User` entity.
+with `profile` property of your `User` entity by default.
 
 ``` php
 <?php
@@ -92,6 +92,8 @@ use Acme\UserBundle\Entity\Profile;
  */
 class User
 {
+    // other properties and methods...
+
     /**
      * @var Profile
      *
