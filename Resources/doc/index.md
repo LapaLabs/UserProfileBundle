@@ -36,8 +36,8 @@ use LapaLabs\UserProfileBundle\Model\AbstractProfile as BaseProfile;
 /**
  * Profile
  *
- * @ORM\Entity()
  * @ORM\Table(name="user_profile")
+ * @ORM\Entity()
  */
 class Profile extends BaseProfile
 {
@@ -70,6 +70,52 @@ doctrine:
 
 * Meaning that you already have your `User` entity. Create it if not.
 You can easy use amazing [FOSUserBundle](https://github.com/FriendsOfSymfony/FOSUserBundle) for it.
+
+## Create relation with User
+
+The `LapaLabs\UserProfileBundle\Model\AbstractProfile` has bidirectional relation
+with `profile` property of your `User` entity.
+
+``` php
+<?php
+
+namespace Acme\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Acme\UserBundle\Entity\Profile; 
+
+/**
+ * User
+ *
+ * @ORM\Table()
+ * @ORM\Entity()
+ */
+class User
+{
+    /**
+     * @var Profile
+     *
+     * @ORM\OneToOne(targetEntity="Acme\UserBundle\Entity\Profile", mappedBy="user")
+     */
+    private $profile;
+
+    /**
+     * @return Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * @param Profile $profile
+     */
+    public function setProfile(Profile $profile)
+    {
+        $this->profile = $profile;
+    }
+}
+```
 
 ## Update database schema
 
